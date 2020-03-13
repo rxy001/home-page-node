@@ -24,8 +24,10 @@ module.exports = (options = {}) => {
       ctx.token_payload = await verifyToken(token)
       await next()
     } catch (err) {
+      console.log(err)
       ctx.body = {
-        msg: 'token验证失败'
+        msg: 'token验证失败',
+        success: 'false'
       }
     }
   }

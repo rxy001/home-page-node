@@ -16,3 +16,28 @@ create table basic (
     createdAt bigint not null,
     updatedAt bigint not null
 ) engine=innodb;
+
+
+create table articleList (
+    id int(32) primary key auto_increment,
+    title TINYTEXT not null,
+    intro CHAR not null,
+    img TINYTEXT not null,
+    author CHAR not null,
+    createdAt bigint not null,
+    updatedAt bigint not null,
+    userId int(32) not null,
+    foreign key (userId) references userInfo (id)
+) engine=innodb;
+
+create table articleContent (
+    id int(32) primary key auto_increment,
+    title TINYTEXT not null,
+    author CHAR not null,
+    img TINYTEXT not null,
+    content text not null,
+    createdAt bigint not null,
+    updatedAt bigint not null,
+    articleListId int(32) not null,
+    foreign key (articleListId) references articleList (id)
+) engine=innodb;

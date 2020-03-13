@@ -12,6 +12,26 @@ function db_query(id) {
 
 module.exports = [
   {
+    method: 'post',
+    url: '/login',
+    callback: async (ctx, next) => {
+      await next()
+      const user = await userInfo.findOne({
+        where: {
+          ...ctx.request.body
+        }
+      })
+      const token = createToken({ userId: user.id })
+      ctx.cookies.set('token', token, {
+        httponly: true,
+      })
+      ctx.body = {
+        success: 'true',
+        msg: '登录成功',
+      }
+    }
+  },
+  {
     method: 'get',
     url: '/userInfo',
     callback: async (ctx, next) => {
@@ -38,7 +58,6 @@ module.exports = [
       const token = createToken({ userId: user.id })
       ctx.cookies.set('token', token, {
         httponly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7,   // cookie有效时长
       })
       ctx.body = {
         success: 'true',

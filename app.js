@@ -22,9 +22,14 @@ app.use(verifyToken({
   excludes: [{
     url: '/userInfo',
     method: 'post'
+  }, {
+    url: '/login',
+    method: 'post'
   }, '/basic']
 }))
 
 app.use(api())
 
-app.listen(3001)
+app.listen(3001, function () {
+  console.log('程序已启动')
+})
