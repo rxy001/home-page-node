@@ -4,40 +4,34 @@ create table userInfo (
     password varchar(10) not null,
     gender bool not null,
     mobile varchar(11) not null,
-    createdAt bigint not null,
-    updatedAt bigint not null,
     backgroundImage TINYTEXT not null
 ) engine=innodb;
 
 
 create table basic (
     id int(32) primary key auto_increment,
-    backgroundImage TINYTEXT not null,
-    createdAt bigint not null,
-    updatedAt bigint not null
+    backgroundImage TINYTEXT not null
 ) engine=innodb;
 
 
 create table articleList (
     id int(32) primary key auto_increment,
-    title TINYTEXT not null,
-    intro CHAR not null,
+    title VARCHAR(50) not null,
+    intro VARCHAR(400) not null,
     img TINYTEXT not null,
-    author CHAR not null,
-    createdAt bigint not null,
-    updatedAt bigint not null,
+    author varchar(10) not null,
     userId int(32) not null,
+    createdTime varchar(10) not null,
     foreign key (userId) references userInfo (id)
 ) engine=innodb;
 
 create table articleContent (
     id int(32) primary key auto_increment,
-    title TINYTEXT not null,
-    author CHAR not null,
+    title VARCHAR(50) not null,
+    author varchar(10) not null,
     img TINYTEXT not null,
     content text not null,
-    createdAt bigint not null,
-    updatedAt bigint not null,
+    createdTime varchar(10) not null,
     articleListId int(32) not null,
     foreign key (articleListId) references articleList (id)
 ) engine=innodb;

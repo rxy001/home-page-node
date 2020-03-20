@@ -1,6 +1,6 @@
 const { userInfo } = require('../mysql')
-const fs = require('fs-extra')
 const { createToken } = require('../utils/token')
+const saveFile = require('../utils/saveFile')
 
 function db_query(id) {
   return userInfo.findOne({
@@ -52,6 +52,7 @@ module.exports = [
       const user = await userInfo.create({
         backgroundImage: '',
         gender: '',
+        mobile: 12333333333,
         ...ctx.request.body,
       })
 
@@ -77,10 +78,7 @@ module.exports = [
       const file = ctx.request.files.backgroundImage
 
       if (file) {
-        const dir = 'static/img/'
-        fs.ensureDirSync(dir)
-
-        const localFilePath = await saveFile(file.path, dir + file.name)
+        const localFilePath = await saveFile(file)
         body.backgroundImage = localFilePath
       }
 
@@ -94,17 +92,3 @@ module.exports = [
       }
     }
   }]
-
-const saveFile = (file, path) => {
-  return new Promise((resolve, reject) => {
-    let render = fs.createReadStream(file);
-    let upStream = fs.createWriteStream(path);
-    render.pipe(upStream);
-    upStream.on('finish', () => {
-      resolve(path)
-    });
-    upStream.on('error', (err) => {
-      reject(err)
-    });
-  })
-}

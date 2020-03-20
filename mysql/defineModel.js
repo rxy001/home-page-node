@@ -1,5 +1,5 @@
 const sequelize = require('./init')
-const Sequelize = require('sequelize');
+const Sequelize = require('Sequelize')
 
 module.exports = function defineModel(name, attributes) {
   const attrs = {};
@@ -17,7 +17,7 @@ module.exports = function defineModel(name, attributes) {
   }
   return sequelize.define(name, attrs, {
     tableName: name,
-    timestamps: true,
+    timestamps: false,
     autoIncrement: true,
     charset: 'utf8',
   });
